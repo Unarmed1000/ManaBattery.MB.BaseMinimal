@@ -14,6 +14,9 @@
     <PackageId>ManaBattery.MB.BaseMinimal</PackageId>
     <Description>A minimal subset of the MB.Base base library.
 Primarily contains various bit and math helper classes.</Description>
+    <Version>0.0.1</Version>
+    <PackageProjectUrl>https://github.com/Unarmed1000/ManaBattery.MB.BaseMinimal</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Unarmed1000/ManaBattery.MB.BaseMinimal</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
