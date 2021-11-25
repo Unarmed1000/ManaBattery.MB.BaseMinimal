@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <Company>Mana Battery ApS</Company>
     <Product>MB.Base</Product>
-    <Authors>Rene Thrane</Authors>
+    <Authors>Mana Battery ApS</Authors>
     <Copyright>Copyright (c) Mana Battery ApS 2021</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
