@@ -11,12 +11,12 @@
     <Copyright>Copyright (c) Mana Battery ApS 2021</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
-    <PackageId>ManaBattery.MB.BaseMinimal</PackageId>
+    <PackageId>ManaBattery.MB.Base_Minimal</PackageId>
     <Description>A minimal subset of the MB.Base base library.
 Primarily contains various bit and math helper classes.</Description>
-    <Version>0.0.1</Version>
-    <PackageProjectUrl>https://github.com/Unarmed1000/ManaBattery.MB.BaseMinimal</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Unarmed1000/ManaBattery.MB.BaseMinimal</RepositoryUrl>
+    <Version>0.0.2</Version>
+    <PackageProjectUrl>https://github.com/Unarmed1000/ManaBattery.MB.Base_Minimal</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Unarmed1000/ManaBattery.MB.Base_Minimal</RepositoryUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
