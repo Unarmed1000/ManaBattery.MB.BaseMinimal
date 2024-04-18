@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -81,6 +82,12 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxAvailableSize1D operator +(PxAvailableSize1D lhs, PxAvailableSize1D rhs)
+      => !lhs.IsInfinity && !rhs.IsInfinity ? new PxAvailableSize1D(lhs.Value + rhs.Value) : PxAvailableSize1D.Infinity;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxAvailableSize1D operator +(PxAvailableSize1D lhs, Int32 rhs)
       => !lhs.IsInfinity ? new PxAvailableSize1D(lhs.Value + rhs) : PxAvailableSize1D.Infinity;
 
@@ -106,6 +113,10 @@ namespace MB.Base.MathEx.Pixel
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxAvailableSize1D Min(PxAvailableSize1D val0, PxAvailableSize1D val1)
       => new PxAvailableSize1D(Math.Min(val0.Value, val1.Value));
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxAvailableSize1D Min(PxAvailableSize1D val0, int val1)
+      => new PxAvailableSize1D(Math.Min(val0.Value, val1));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxAvailableSize1D Max(PxAvailableSize1D val0, PxAvailableSize1D val1)

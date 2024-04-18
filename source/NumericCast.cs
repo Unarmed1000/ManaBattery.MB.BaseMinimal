@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -31,8 +32,19 @@ namespace MB.Base
 {
   public static class NumericCast
   {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int16 ToInt16(Int32 value)
+    {
+      if (value >= Int16.MinValue && value <= Int16.MaxValue)
+        return (Int16)value;
+
+      if (value < 0)
+        throw new ConversionUnderflowException();
+      throw new ConversionOverflowException();
+    }
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToInt32
+
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int32 ToInt32(byte value) => (Int32)value;
@@ -48,10 +60,31 @@ namespace MB.Base
       throw new ConversionOverflowException();
     }
 
-    #endregion
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int32 ToInt32(float value)
+    {
+      var res = MathEx.MathUtil.RoundToInt32(value);
+      if (res < (float)Int32.MinValue)
+        throw new ConversionUnderflowException();
+      if (res > (float)Int32.MaxValue)
+        throw new ConversionOverflowException();
+      return res;
+    }
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int32 ToInt32(double value)
+    {
+      var res = MathEx.MathUtil.RoundToInt32(value);
+      if (res < (double)Int32.MinValue)
+        throw new ConversionUnderflowException();
+      if (res > (double)Int32.MaxValue)
+        throw new ConversionOverflowException();
+      return res;
+    }
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToUInt8
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -97,9 +130,8 @@ namespace MB.Base
       throw new ConversionOverflowException();
     }
 
-    #endregion
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToUInt16
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -162,11 +194,7 @@ namespace MB.Base
       throw new ConversionOverflowException();
     }
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToUInt32
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -194,8 +222,33 @@ namespace MB.Base
       throw new ConversionUnderflowException();
     }
 
-    #endregion
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt32 ToUInt32(UInt64 value)
+    {
+      if (value <= UInt32.MaxValue)
+        return (UInt32)value;
+      throw new ConversionOverflowException();
+    }
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 ToUInt64(Int64 value)
+    {
+      if (value >= 0)
+        return (UInt64)value;
+      throw new ConversionUnderflowException();
+    }
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(UInt64 value)
+    {
+      if (value <= (UInt64)Int64.MaxValue)
+        return (Int64)value;
+      throw new ConversionOverflowException();
+    }
   }
 }
 

@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2015, Mana Battery
+//* Copyright (c) 2015-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -41,16 +42,17 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public ConversionException(string desc)
       : base(desc)
     {
     }
+
     public ConversionException(string desc, Exception innerException)
       : base(desc, innerException)
     {
     }
   }
-
 
   public class ConversionUnderflowException : ConversionException
   {
@@ -58,10 +60,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public ConversionUnderflowException(string desc)
       : base(desc)
     {
     }
+
     public ConversionUnderflowException(string desc, Exception innerException)
       : base(desc, innerException)
     {
@@ -74,16 +78,17 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public ConversionOverflowException(string desc)
       : base(desc)
     {
     }
+
     public ConversionOverflowException(string desc, Exception innerException)
       : base(desc, innerException)
     {
     }
   }
-
 
   /// <summary>
   /// </summary>
@@ -93,15 +98,38 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public DecodingErrorException(string desc)
       : base(desc)
     {
     }
+
     public DecodingErrorException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
     }
   }
+
+  /// <summary>
+  /// </summary>
+  public class InvalidFormatException : DecodingErrorException
+  {
+    public InvalidFormatException()
+      : base()
+    {
+    }
+
+    public InvalidFormatException(string desc)
+      : base(desc)
+    {
+    }
+
+    public InvalidFormatException(string desc, Exception innnerException)
+      : base(desc, innnerException)
+    {
+    }
+  }
+
 
   /// <summary>
   /// </summary>
@@ -111,10 +139,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public DecodingCapacityExceededErrorException(string desc)
       : base(desc)
     {
     }
+
     public DecodingCapacityExceededErrorException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -129,10 +159,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public MissingFormatHeaderException(string desc)
       : base(desc)
     {
     }
+
     public MissingFormatHeaderException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -147,10 +179,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public UnexpectedFormatContentTypeException(string desc)
       : base(desc)
     {
     }
+
     public UnexpectedFormatContentTypeException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -165,16 +199,37 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public UnsupportedFormatVersionException(string desc)
       : base(desc)
     {
     }
+
     public UnsupportedFormatVersionException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
     }
   }
 
+  /// <summary>
+  /// </summary>
+  public class IncompleteContentException : DecodingErrorException
+  {
+    public IncompleteContentException()
+      : base()
+    {
+    }
+
+    public IncompleteContentException(string desc)
+      : base(desc)
+    {
+    }
+
+    public IncompleteContentException(string desc, Exception innnerException)
+      : base(desc, innnerException)
+    {
+    }
+  }
 
   /// <summary>
   /// </summary>
@@ -184,16 +239,17 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public DecodingCRCException(string desc)
       : base(desc)
     {
     }
+
     public DecodingCRCException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
     }
   }
-
 
   /// <summary>
   /// Throw this if an error in the program logic is detected.
@@ -204,10 +260,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public LogicErrorException(string desc)
       : base(desc)
     {
     }
+
     public LogicErrorException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -223,10 +281,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public UnexpectedException(string desc)
       : base(desc)
     {
     }
+
     public UnexpectedException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -242,10 +302,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public InvalidArgumentException(string desc)
       : base(desc)
     {
     }
+
     public InvalidArgumentException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -262,10 +324,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public UsageErrorException(string desc)
       : base(desc)
     {
     }
+
     public UsageErrorException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -281,16 +345,17 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public InternalErrorException(string desc)
       : base(desc)
     {
     }
+
     public InternalErrorException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
     }
   }
-
 
   /// <summary>
   /// Throw this when a object is used in a illegal way.
@@ -302,10 +367,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public OutOfBoundsException(string desc)
       : base(desc)
     {
     }
+
     public OutOfBoundsException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -318,10 +385,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public NotFoundException(string desc)
       : base(desc)
     {
     }
+
     public NotFoundException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {
@@ -334,10 +403,12 @@ namespace MB.Base.Exceptions
       : base()
     {
     }
+
     public ObjectDestroyedException(string className)
       : base(className)
     {
     }
+
     public ObjectDestroyedException(string desc, Exception innnerException)
       : base(desc, innnerException)
     {

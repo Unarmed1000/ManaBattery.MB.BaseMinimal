@@ -1,9 +1,8 @@
-
-
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -135,11 +134,14 @@ namespace MB.Base.MathEx.Pixel
       => new PxAvailableSize(PxAvailableSize1D.Min(val0.Width, val1.Width), PxAvailableSize1D.Min(val0.Height, val1.Height));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxAvailableSize Min(in PxAvailableSize val0, in PxSize2D val1)
+      => new PxAvailableSize(PxAvailableSize1D.Min(val0.Width, val1.Width), PxAvailableSize1D.Min(val0.Height, val1.Height));
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxAvailableSize Max(in PxAvailableSize val0, in PxAvailableSize val1)
       => new PxAvailableSize(PxAvailableSize1D.Max(val0.Width, val1.Width), PxAvailableSize1D.Max(val0.Height, val1.Height));
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxSize2D MinPxSize2D(in PxAvailableSize val0, PxSize2D val1)

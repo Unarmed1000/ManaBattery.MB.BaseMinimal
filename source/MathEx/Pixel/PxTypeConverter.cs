@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -30,7 +31,8 @@ namespace MB.Base.MathEx.Pixel
   public static class PxTypeConverter
   {
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxAreaRectangleF
+    // ToPxAreaRectangleF
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxAreaRectangleF ToPxAreaRectangleF(in PxRectangle value)
@@ -40,9 +42,13 @@ namespace MB.Base.MathEx.Pixel
     public static PxAreaRectangleF ToPxAreaRectangleF(in PxRectangleU value)
       => new PxAreaRectangleF((float)value.Left, (float)value.Top, (float)value.Width, (float)value.Height);
 
-    #endregion
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxAreaRectangleF ToPxAreaRectangleF(in PxClipRectangle value)
+      => PxAreaRectangleF.FromLeftTopRightBottom((float)value.Left, (float)value.Top, (float)value.Right, (float)value.Bottom, OptimizationCheckFlag.NoCheck);
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxClipRectangle
+	// ToPxClipRectangle
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxClipRectangle ToPxClipRectangle(in PxRectangle value) => new PxClipRectangle(value.Left, value.Top, value.Width, value.Height);
@@ -54,11 +60,9 @@ namespace MB.Base.MathEx.Pixel
       => new PxClipRectangle(NumericCast.ToInt32(value.Left), NumericCast.ToInt32(value.Top),
                              NumericCast.ToInt32(value.Width), NumericCast.ToInt32(value.Height));
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxExtent2D
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxExtent2D
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxExtent2D ToPxExtent2D(PxPoint2 value) => new PxExtent2D(NumericCast.ToUInt32(value.X), NumericCast.ToUInt32(value.Y));
@@ -68,11 +72,9 @@ namespace MB.Base.MathEx.Pixel
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxExtent2D ToPxExtent2D(PxSize2D value) => new PxExtent2D(NumericCast.ToUInt32(value.Width), NumericCast.ToUInt32(value.Height));
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxFloat2
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxFloat2
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxFloat2 ToPxFloat2(PxPoint2 value) => new PxFloat2(value.X, value.Y);
@@ -80,11 +82,9 @@ namespace MB.Base.MathEx.Pixel
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxFloat2 ToPxFloat2(PxSize2D value) => new PxFloat2(value.Width, value.Height);
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxPoint2
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxPoint2
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxPoint2 ToPxPoint2(PxExtent2D value) => new PxPoint2(NumericCast.ToInt32(value.Width), NumericCast.ToInt32(value.Height));
@@ -104,12 +104,13 @@ namespace MB.Base.MathEx.Pixel
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxPoint2 ToRoundedPxPoint2(PxFloat2 value) => new PxPoint2(MathUtil.RoundToInt32(value.X), MathUtil.RoundToInt32(value.Y));
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxSize2D ToRoundedPxSize2D(PxFloat2 value) => new PxSize2D(MathUtil.RoundToInt32(value.X), MathUtil.RoundToInt32(value.Y));
 
-    #endregion
-    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxPoint2U
+    // ToPxPoint2U
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxPoint2U ToPxPoint2U(PxExtent2D value) => new PxPoint2U(value.Width, value.Height);
@@ -119,11 +120,9 @@ namespace MB.Base.MathEx.Pixel
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxPoint2U ToPxPoint2U(PxPoint2 value) => new PxPoint2U(NumericCast.ToUInt32(value.X), NumericCast.ToUInt32(value.Y));
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxSize2D
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxSize2D
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxSize2D ToPxSize2D(PxPoint2 value)
@@ -137,11 +136,13 @@ namespace MB.Base.MathEx.Pixel
     public static PxSize2D ToPxSize2D(PxExtent2D value)
       => new PxSize2D(NumericCast.ToInt32(value.Width), NumericCast.ToInt32(value.Height), OptimizationCheckFlag.NoCheck);
 
-    #endregion
-    //------------------------------------------------------------------------------------------------------------------------------------------------
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxSize2D ToPxSize2D(PxSize2DF value)
+      => new PxSize2D(MathUtil.RoundToInt32(value.Width), MathUtil.RoundToInt32(value.Height), OptimizationCheckFlag.NoCheck);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxSize2DF
+    // ToPxSize2DF
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxSize2DF ToPxSize2DF(PxPoint2 value)
@@ -159,64 +160,56 @@ namespace MB.Base.MathEx.Pixel
     public static PxSize2DF ToPxSize2DF(PxExtent2D value)
       => new PxSize2DF(value.Width, value.Height, OptimizationCheckFlag.NoCheck);
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxRectangle
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxRectangle
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxRectangle ToPxRectangle(in PxRectangleU value)
       => new PxRectangle(NumericCast.ToInt32(value.X), NumericCast.ToInt32(value.Y), NumericCast.ToInt32(value.Width),
                          NumericCast.ToInt32(value.Height));
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxRectangleF
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    //#region ToPxRectangleF
 
     //[MethodImpl(MethodImplOptions.AggressiveInlining)]
     //public static PxRectangleF ToPxRectangleF(in PxRectangle value)
     //  => new PxRectangleF(value.X, value.Y, value.Width, value.Height);
 
-    //#endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxRectangleU
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxRectangleU
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxRectangleU ToPxRectangleU(in PxRectangle value)
       => new PxRectangleU(NumericCast.ToUInt32(value.X), NumericCast.ToUInt32(value.Y), NumericCast.ToUInt32(value.Width),
                           NumericCast.ToUInt32(value.Height));
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxThickness
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxThickness
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxThickness ToPxThickness(in PxThicknessU value)
       => new PxThickness(NumericCast.ToInt32(value.Left), NumericCast.ToInt32(value.Top), NumericCast.ToInt32(value.Right),
                          NumericCast.ToInt32(value.Bottom));
 
-    #endregion
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+    // ToPxThicknessF
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxThicknessF
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxThicknessF ToPxThicknessF(in PxThickness value)
+      => new PxThicknessF(value.Left, value.Top, value.Right, value.Bottom);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxThicknessF ToPxThicknessF(in PxThicknessU value)
       => new PxThicknessF(value.Left, value.Top, value.Right, value.Bottom);
 
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
+    // ToPxThicknessU
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToPxThicknessU
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxThicknessU ToPxThicknessU(in PxThickness value)
@@ -228,8 +221,6 @@ namespace MB.Base.MathEx.Pixel
       => new PxThicknessU16(NumericCast.ToUInt16(value.Left), NumericCast.ToUInt16(value.Top),
                             NumericCast.ToUInt16(value.Right), NumericCast.ToUInt16(value.Bottom));
 
-    #endregion
-    //------------------------------------------------------------------------------------------------------------------------------------------------
   }
 
 }

@@ -2,7 +2,7 @@
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2010-2024, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -22,94 +22,132 @@
 //****************************************************************************************************************************************************
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace MB.Base.MathEx
+namespace MB.Base.MathEx.Pixel
 {
-  /// <summary>
-  /// Represents a span
-  /// </summary>
   [Serializable]
-  public readonly struct SpanRange : IEquatable<SpanRange>
+  public readonly struct PxValue : IEquatable<PxValue>
   {
-    public readonly int Start;
-    public readonly int Length;
+    public static readonly PxValue MinValue = new PxValue(Int32.MinValue);
+    public static readonly PxValue MaxValue = new PxValue(Int32.MaxValue);
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public int End => Start + Length;
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
+    public readonly Int32 Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public SpanRange(int start, int length)
+    public PxValue(Int32 xDp)
     {
-      Start = start;
-      Length = length;
+      Value = xDp;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Check if a span is equal to another span
+    /// Add
     /// </summary>
     /// <param name="lhs"></param>
     /// <param name="rhs"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator ==(SpanRange lhs, SpanRange rhs) => (lhs.Start == rhs.Start && lhs.Length == rhs.Length);
+    public static PxValue operator +(PxValue lhs, PxValue rhs) => new PxValue(lhs.Value + rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Check if a span is not equal to another span
+    /// Substract
     /// </summary>
     /// <param name="lhs"></param>
     /// <param name="rhs"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator !=(SpanRange lhs, SpanRange rhs) => !(lhs == rhs);
+    public static PxValue operator -(PxValue lhs, PxValue rhs) => new PxValue(lhs.Value - rhs.Value);
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValue operator *(PxValue lhs, PxValue rhs) => new PxValue(lhs.Value * rhs.Value);
+
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is SpanRange other && (this == other);
-
+    /// <summary>
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValue operator /(PxValue lhs, PxValue rhs) => new PxValue(lhs.Value / rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public override int GetHashCode() => Start ^ Length;
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public override string ToString() => $"({Start}:{Length})";
+    /// <summary>
+    /// Invert
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValue operator -(PxValue value) => new PxValue(-value.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool Equals(SpanRange other) => (Start == other.Start && Length == other.Length);
+    public static bool operator ==(PxValue lhs, PxValue rhs) => (lhs.Value == rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static SpanRange FromStartToEnd(int startIndex, int endIndex)
-    {
-      if (startIndex > endIndex)
-        throw new ArgumentException($"{nameof(startIndex)} must be <= {nameof(endIndex)}");
-      return new SpanRange(startIndex, endIndex - startIndex);
-    }
+    public static bool operator !=(PxValue lhs, PxValue rhs) => !(lhs == rhs);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static SpanRange FromStartToEnd(int startIndex, int endIndex, OptimizationCheckFlag checkFlag)
-    {
-      Debug.Assert(startIndex <= endIndex);
-      return new SpanRange(startIndex, endIndex - startIndex);
-    }
+    public static bool operator <(PxValue lhs, PxValue rhs) => lhs.Value < rhs.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <=(PxValue lhs, PxValue rhs) => lhs.Value <= rhs.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >(PxValue lhs, PxValue rhs) => lhs.Value > rhs.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >=(PxValue lhs, PxValue rhs) => lhs.Value >= rhs.Value;
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is PxValue value && (Value == value.Value);
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override int GetHashCode() => Value.GetHashCode();
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public bool Equals(PxValue other) => Value == other.Value;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override string ToString() => $"{Value}dp";
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValue Min(PxValue val0, PxValue val1) => new PxValue(Math.Min(val0.Value, val1.Value));
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValue Max(PxValue val0, PxValue val1) => new PxValue(Math.Max(val0.Value, val1.Value));
   }
 }
 

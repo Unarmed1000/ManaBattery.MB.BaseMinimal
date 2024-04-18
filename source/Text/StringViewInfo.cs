@@ -2,7 +2,7 @@
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019-2024, Mana Battery
+//* Copyright (c) 2022-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -21,42 +21,30 @@
 //* EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //****************************************************************************************************************************************************
 
-using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace MB.Base.MathEx
+namespace MB.Base.Text
 {
-  public static partial class MathUtil
+  /// <summary>
+  /// </summary>
+  public readonly ref struct StringViewInfo
   {
-    /// <summary>
-    /// Calculate the length of a Float2
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float Length(Float2 value) => (float)Math.Sqrt((value.X * value.X) + (value.Y * value.Y));
+    public readonly string Source;
+    public readonly int StartIndex;
+    public readonly int Length;
 
-    /// <summary>
-    /// Calculate the squared length of a Float2
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float LengthSquared(Float2 value) => (value.X * value.X) + (value.Y * value.Y);
-
-
-    /// <summary>
-    /// Normalize a float 2
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Float2 Normalize(Float2 value)
+    public StringViewInfo(string source, int startIndex, int length)
     {
-      float val = 1.0f / (float)Math.Sqrt((value.X * value.X) + (value.Y * value.Y));
-      return new Float2(value.X * val, value.Y * val);
+      Debug.Assert(source != null);
+      Debug.Assert(startIndex >= 0 && startIndex <= source.Length);
+      Debug.Assert(length >= 0 && (source.Length - length) >= 0);
+      Source = source;
+      StartIndex = startIndex;
+      Length = length;
     }
   }
 }

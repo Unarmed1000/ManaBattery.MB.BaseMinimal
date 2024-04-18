@@ -1,7 +1,8 @@
-﻿//****************************************************************************************************************************************************
+﻿#nullable enable
+//****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2020, Mana Battery
+//* Copyright (c) 2020-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -34,6 +35,8 @@ namespace MB.Base.Text
   /// </summary>
   public readonly ref struct StringView // : IEquatable<StringView>
   {
+    public static StringView Empty => new StringView(string.Empty, 0, 0);
+
     private readonly string m_source;
     private readonly int m_startIndex;
     public readonly int Length;
@@ -58,6 +61,10 @@ namespace MB.Base.Text
       m_startIndex = startIndex;
       Length = length;
     }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public StringViewInfo Info => new StringViewInfo(m_source, m_startIndex, Length);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,7 +125,7 @@ namespace MB.Base.Text
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static StringView Create(string src)
+    public static StringView Create(string? src)
     {
       src = src != null ? src : string.Empty;
       return new StringView(src, 0, src.Length);
@@ -127,7 +134,7 @@ namespace MB.Base.Text
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static StringView Create(string src, int startIndex, int length)
+    public static StringView Create(string? src, int startIndex, int length)
     {
       src = src != null ? src : string.Empty;
       return new StringView(src, startIndex, length);

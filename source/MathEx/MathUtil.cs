@@ -1,7 +1,8 @@
-﻿//****************************************************************************************************************************************************
+﻿#nullable enable
+//****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2010, Mana Battery
+//* Copyright (c) 2010-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -55,6 +56,11 @@ namespace MB.Base.MathEx
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float Clamp(float value, float min, float max) => Math.Min(Math.Max(value, min), max);
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte Clamp(byte value, byte min, byte max) => Math.Min(Math.Max(value, min), max);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -320,6 +326,26 @@ namespace MB.Base.MathEx
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 RoundToInt64(float value)
+    {
+      var res = Math.Round(value, MidpointRounding.AwayFromZero);
+      Debug.Assert(res >= ((double)Int64.MinValue) && res <= ((double)Int64.MaxValue));
+      return (Int64)res;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 RoundToInt64(double value)
+    {
+      var res = Math.Round(value, MidpointRounding.AwayFromZero);
+      Debug.Assert(res >= ((float)Int64.MinValue) && res <= ((float)Int64.MaxValue));
+      return (Int64)res;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UInt16 RoundToUInt16(double value)
     {
       var res = Math.Round(value, MidpointRounding.AwayFromZero);
@@ -335,6 +361,26 @@ namespace MB.Base.MathEx
       var res = Math.Round(value, MidpointRounding.AwayFromZero);
       Debug.Assert(res >= 0.0f && res <= ((float)UInt32.MaxValue));
       return (UInt32)res;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 RoundToUInt64(float value)
+    {
+      var res = Math.Round(value, MidpointRounding.AwayFromZero);
+      Debug.Assert(res >= ((double)UInt64.MinValue) && res <= ((double)UInt64.MaxValue));
+      return (UInt64)res;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 RoundToUInt64(double value)
+    {
+      var res = Math.Round(value, MidpointRounding.AwayFromZero);
+      Debug.Assert(res >= ((float)UInt64.MinValue) && res <= ((float)UInt64.MaxValue));
+      return (UInt64)res;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,8 @@
-﻿//****************************************************************************************************************************************************
+﻿#nullable enable
+//****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -49,15 +50,11 @@ namespace MB.Base.MathEx
     }
 
     // Swizzle the components
-    public Float2 XY => new Float2(X, Y);
+    public readonly Float2 XY => new Float2(X, Y);
 
 
     // Swizzle the components
-    public Float3 ZYX => new Float3(Z, Y, X);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Operators
+    public readonly Float3 ZYX => new Float3(Z, Y, X);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -149,14 +146,6 @@ namespace MB.Base.MathEx
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    #endregion
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Methods
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
     [ObsoleteAttribute]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Add(ref Float3 lhs, ref Float3 rhs, out Float3 rResult)
@@ -224,7 +213,7 @@ namespace MB.Base.MathEx
     /// Calculate the length of a Float3
     /// </summary>
     /// <returns></returns>
-    public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+    public readonly float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -233,7 +222,7 @@ namespace MB.Base.MathEx
     /// </summary>
     /// <returns></returns>
 
-    public float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
+    public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -253,10 +242,6 @@ namespace MB.Base.MathEx
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     public override string ToString() => $"{{X:{X} Y:{Y} Z:{Z}}}";
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #endregion
   }
 }
 

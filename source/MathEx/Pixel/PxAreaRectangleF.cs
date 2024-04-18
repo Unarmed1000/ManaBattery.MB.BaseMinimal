@@ -1,7 +1,8 @@
-﻿//****************************************************************************************************************************************************
+﻿#nullable enable
+//****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -43,11 +44,11 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private PxAreaRectangleF(float left, float top, float right, float bottom, OptimizationCheckFlag flag)
+    private  PxAreaRectangleF(float left, float top, float right, float bottom, OptimizationInternal flag)
     {
       Debug.Assert(right >= left);
       Debug.Assert(bottom >= top);
-      Debug.Assert(flag == OptimizationCheckFlag.NoCheck);
+      Debug.Assert(flag == OptimizationInternal.NoCheck);
       Left = left;
       Top = top;
       Right = right;
@@ -65,6 +66,21 @@ namespace MB.Base.MathEx.Pixel
       Bottom = top + Math.Max(height, 0);
     }
 
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public PxAreaRectangleF(float left, float top, float width, float height, OptimizationCheckFlag flag)
+    {
+      Debug.Assert(width >= 0);
+      Debug.Assert(height >= 0);
+      Debug.Assert(flag == OptimizationCheckFlag.NoCheck);
+
+      Left = left;
+      Top = top;
+      Right = left + width;
+      Bottom = top + height;
+    }
+
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -80,7 +96,7 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     public static PxAreaRectangleF FromLeftTopRightBottom(float left, float top, float right, float bottom)
-      => new PxAreaRectangleF(left, top, Math.Max(right, left), Math.Max(bottom, top), OptimizationCheckFlag.NoCheck);
+      => new PxAreaRectangleF(left, top, Math.Max(right, left), Math.Max(bottom, top), OptimizationInternal.NoCheck);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -88,12 +104,8 @@ namespace MB.Base.MathEx.Pixel
     {
       Debug.Assert(right >= left);
       Debug.Assert(bottom >= top);
-      return new PxAreaRectangleF(left, top, right, bottom, flag);
+      return new PxAreaRectangleF(left, top, right, bottom, OptimizationInternal.NoCheck);
     }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Methods
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -180,7 +192,7 @@ namespace MB.Base.MathEx.Pixel
     public static PxAreaRectangleF SetHeight(in PxAreaRectangleF rect, float value)
       => PxAreaRectangleF.FromLeftTopRightBottom(rect.Left, rect.Top, rect.Right, rect.Top + value);
 
-    // ------------------------------------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
     /// Set the start location of this rect
@@ -240,19 +252,11 @@ namespace MB.Base.MathEx.Pixel
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    #endregion
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxAreaRectangleF Deflate(in PxAreaRectangleF source, PxThicknessF value)
     {
       return FromLeftTopRightBottom(source.Left + value.Left, source.Top + value.Top, source.Right - value.Right, source.Bottom - value.Bottom);
     }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Operators
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -268,14 +272,6 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     public override string ToString() => $"{{Left:{Left} Top:{Top} Right:{Right} Bottom:{Bottom}}}";
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #endregion
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Methods
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -296,6 +292,19 @@ namespace MB.Base.MathEx.Pixel
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(float x, float y) => x >= Left && x < Right && y >= Top && y < Bottom;
+
+    /// <summary>
+    /// Gets whether or not the provided <see cref="PxAreaRectangleF"/> lies within the bounds of this <see cref="PxAreaRectangleF"/>.
+    /// </summary>
+    /// <param name="value">The <see cref="PxAreaRectangleF"/> to check for inclusion in this <see cref="PxAreaRectangleF"/>.</param>
+    /// <returns><c>true</c> if the provided <see cref="PxAreaRectangleF"/>'s bounds lie entirely inside this <see cref="PxAreaRectangleF"/>; <c>false</c> otherwise.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool Contains(in PxAreaRectangleF value)
+      => Left <= value.Left && value.Right <= Right && Top <= value.Top && value.Bottom <= Bottom;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool Contains(float srcLeft, float srcTop, float srcRight, float srcBottom)
+      => Left <= srcLeft && srcRight <= Right && Top <= srcTop && srcBottom <= Bottom;
 
     /// <summary>
     /// Gets whether or not the other <see cref="Rectangle"/> intersects with this rectangle.
@@ -346,10 +355,6 @@ namespace MB.Base.MathEx.Pixel
 
       return FromLeftTopRightBottom(left, top, right, bottom);
     }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #endregion
   }
 }
 

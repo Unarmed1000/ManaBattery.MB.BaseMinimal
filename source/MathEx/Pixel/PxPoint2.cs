@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -42,9 +43,7 @@ namespace MB.Base.MathEx.Pixel
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Operators
-
+    // Operators
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
@@ -236,8 +235,6 @@ namespace MB.Base.MathEx.Pixel
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxPoint2 Max(PxPoint2 val0, PxPoint2 val1) => new PxPoint2(Math.Max(val0.X, val1.X), Math.Max(val0.Y, val1.Y));
-
-    #endregion
   }
 }
 

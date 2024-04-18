@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -50,6 +51,8 @@ namespace MB.Base.MathEx.Pixel
     /// The scaled content margin
     /// </summary>
     public readonly PxThickness ContentMarginPx;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public PxTrimmedNineSlice(PxSize2D sizePx, in PxThicknessF trimMarginPxf, in PxThicknessF trimmedNineSlicePxf, in PxThickness contentMarginPx)

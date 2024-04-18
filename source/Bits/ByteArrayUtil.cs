@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2012, Mana Battery
+//* Copyright (c) 2012-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -410,7 +411,6 @@ namespace MB.Base.Bits
       return 1;
     }
 
-
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
@@ -427,7 +427,6 @@ namespace MB.Base.Bits
       return 1;
     }
 
-
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
@@ -443,7 +442,6 @@ namespace MB.Base.Bits
       array[offset] = value;
       return 1;
     }
-
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -463,7 +461,6 @@ namespace MB.Base.Bits
       return 2;
     }
 
-
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
@@ -480,7 +477,6 @@ namespace MB.Base.Bits
       array[offset + 1] = (byte)((value >> 8) & 0xFF);
       return 2;
     }
-
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -502,7 +498,6 @@ namespace MB.Base.Bits
       return 4;
     }
 
-
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
@@ -521,7 +516,6 @@ namespace MB.Base.Bits
       array[offset + 3] = (byte)((value >> 24) & 0xFF);
       return 4;
     }
-
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -546,7 +540,6 @@ namespace MB.Base.Bits
       array[offset + 7] = (byte)((valueEx >> 56) & 0xFF);
       return 8;
     }
-
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -582,16 +575,12 @@ namespace MB.Base.Bits
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
     public static int WriteLE(byte[] array, int offset, float value)
     {
-      Debug.Assert(array != null);
-      byte[] res = BitConverter.GetBytes(value);
+      Debug.Assert((array.Length - offset) >= 4);
+      var dstSpan = array.AsSpan(offset, 4);
+      if (!BitConverter.TryWriteBytes(dstSpan, value))
+        throw new Exception("Failed to convert float to bytes");
       if (!BitConverter.IsLittleEndian)
-        ReverseBytes(res);
-      Debug.Assert(res.Length == sizeof(float));
-
-      array[offset] = res[0];
-      array[offset + 1] = res[0 + 1];
-      array[offset + 2] = res[0 + 2];
-      array[offset + 3] = res[0 + 3];
+        ByteArrayUtil.ReverseBytes(dstSpan);
       return 4;
     }
 
@@ -606,20 +595,12 @@ namespace MB.Base.Bits
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
     public static int WriteLE(byte[] array, int offset, double value)
     {
-      Debug.Assert(array != null);
-      byte[] res = BitConverter.GetBytes(value);
+      Debug.Assert((array.Length - offset) >= 8);
+      var dstSpan = array.AsSpan(offset, 8);
+      if (!BitConverter.TryWriteBytes(dstSpan, value))
+        throw new Exception("Failed to convert float to bytes");
       if (!BitConverter.IsLittleEndian)
-        ReverseBytes(res);
-      Debug.Assert(res.Length == sizeof(double));
-
-      array[offset] = res[0];
-      array[offset + 1] = res[0 + 1];
-      array[offset + 2] = res[0 + 2];
-      array[offset + 3] = res[0 + 3];
-      array[offset + 4] = res[0 + 4];
-      array[offset + 5] = res[0 + 5];
-      array[offset + 6] = res[0 + 6];
-      array[offset + 7] = res[0 + 7];
+        ByteArrayUtil.ReverseBytes(dstSpan);
       return 8;
     }
 
@@ -651,6 +632,24 @@ namespace MB.Base.Bits
     //  rOffset += WriteLE(array, rOffset, value);
     //}
 
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    public static void ReverseBytes(Span<byte> inArray)
+    {
+      Debug.Assert(inArray != null);
+
+      byte temp;
+      int highCtr = inArray.Length - 1;
+
+      for (int ctr = 0; ctr < inArray.Length / 2; ctr++)
+      {
+        temp = inArray[ctr];
+        inArray[ctr] = inArray[highCtr];
+        inArray[highCtr] = temp;
+        highCtr -= 1;
+      }
+    }
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]

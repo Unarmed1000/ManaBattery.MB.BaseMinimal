@@ -21,141 +21,144 @@
 //* EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //****************************************************************************************************************************************************
 
-using System.Diagnostics;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace MB.Base.MathEx.Pixel
 {
-  public static class PxUncheckedTypeConverter
+  [Serializable]
+  public readonly struct PxValueF : IEquatable<PxValueF>
   {
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxAreaRectangleF
-    //------------------------------------------------------------------------------------------------------------------------------------------------
+    public static readonly PxValueF MinValue = new PxValueF(float.MinValue);
+    public static readonly PxValueF MaxValue = new PxValueF(float.MaxValue);
+
+    public static readonly PxValueF Zero = new PxValueF();
+    public static readonly PxValueF NaN = new PxValueF(float.NaN);
+    public static readonly PxValueF NegativeInfinity = new PxValueF(float.NegativeInfinity);
+    public static readonly PxValueF PositiveInfinity = new PxValueF(float.PositiveInfinity);
+
+    public readonly float Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxAreaRectangleF ToPxAreaRectangleF(PxRectangleU value)
-      => new PxAreaRectangleF((float)value.Left, (float)value.Top, (float)value.Width, (float)value.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxClipRectangle
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxClipRectangle ToPxClipRectangle(PxRectangle value) => new PxClipRectangle(value.Left, value.Top, value.Width, value.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxClipRectangle ToPxClipRectangle(PxRectangleU value)
-      => new PxClipRectangle(UncheckedNumericCast.ToInt32(value.Left), UncheckedNumericCast.ToInt32(value.Top),
-                             UncheckedNumericCast.ToInt32(value.Width), UncheckedNumericCast.ToInt32(value.Height));
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxExtent2D
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxExtent2D ToPxExtent2D(PxPoint2 value)
-      => new PxExtent2D(UncheckedNumericCast.ToUInt32(value.X), UncheckedNumericCast.ToUInt32(value.Y));
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxExtent2D ToPxExtent2D(PxSize2D value)
-      => new PxExtent2D(UncheckedNumericCast.ToUInt32(value.Width), UncheckedNumericCast.ToUInt32(value.Height));
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxPoint2
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 ToPxPoint2(PxExtent2D value)
-      => new PxPoint2(UncheckedNumericCast.ToInt32(value.Width), UncheckedNumericCast.ToInt32(value.Height));
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 ToPxPoint2(PxPoint2U value) => new PxPoint2(UncheckedNumericCast.ToInt32(value.X), UncheckedNumericCast.ToInt32(value.Y));
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 ToPxPoint2(PxSize2D value) => new PxPoint2(value.Width, value.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxPoint2U
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2U ToPxPoint2U(PxExtent2D value) => new PxPoint2U(value.Width, value.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2U ToPxPoint2U(PxPoint2 value)
-      => new PxPoint2U(UncheckedNumericCast.ToUInt32(value.X), UncheckedNumericCast.ToUInt32(value.Y));
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxSize2D
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxSize2D ToPxSize2D(PxPoint2 value)
+    public PxValueF(float xDp)
     {
-      Debug.Assert(value.X >= 0);
-      Debug.Assert(value.Y >= 0);
-      return new PxSize2D(value.X, value.Y, OptimizationCheckFlag.NoCheck);
+      Value = xDp;
     }
 
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+    // Operators
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Add
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxSize2D ToPxSize2D(PxExtent2D value)
-      => new PxSize2D(UncheckedNumericCast.ToInt32(value.Width), UncheckedNumericCast.ToInt32(value.Height), OptimizationCheckFlag.NoCheck);
+    public static PxValueF operator +(PxValueF lhs, PxValueF rhs) => new PxValueF(lhs.Value + rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxRectangle
+
+    /// <summary>
+    /// Substract
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValueF operator -(PxValueF lhs, PxValueF rhs) => new PxValueF(lhs.Value - rhs.Value);
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValueF operator *(PxValueF lhs, PxValueF rhs) => new PxValueF(lhs.Value * rhs.Value);
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValueF operator /(PxValueF lhs, PxValueF rhs) => new PxValueF(lhs.Value / rhs.Value);
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Invert
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValueF operator -(PxValueF value) => new PxValueF(-value.Value);
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxRectangle ToPxRectangle(in PxRectangleU value)
-      => new PxRectangle(UncheckedNumericCast.ToInt32(value.X), UncheckedNumericCast.ToInt32(value.Y),
-                         UncheckedNumericCast.ToInt32(value.Width), UncheckedNumericCast.ToInt32(value.Height));
+    public static bool operator ==(PxValueF lhs, PxValueF rhs) => (lhs.Value == rhs.Value);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxRectangle ToPxRectangle(PxRectangleM value)
-      => new PxRectangle(value.X, value.Y, value.Width, value.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxRectangleU
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxRectangleU ToPxRectangleU(in PxRectangle value)
-      => new PxRectangleU(UncheckedNumericCast.ToUInt32(value.X), UncheckedNumericCast.ToUInt32(value.Y),
-                          UncheckedNumericCast.ToUInt32(value.Width), UncheckedNumericCast.ToUInt32(value.Height));
+    public static bool operator !=(PxValueF lhs, PxValueF rhs) => !(lhs == rhs);
 
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxThickness
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxThickness ToPxThickness(in PxThicknessU value)
-      => new PxThickness(UncheckedNumericCast.ToInt32(value.Left), UncheckedNumericCast.ToInt32(value.Top),
-                         UncheckedNumericCast.ToInt32(value.Right), UncheckedNumericCast.ToInt32(value.Bottom));
+    public static bool operator <(PxValueF lhs, PxValueF rhs) => lhs.Value < rhs.Value;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <=(PxValueF lhs, PxValueF rhs) => lhs.Value <= rhs.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >(PxValueF lhs, PxValueF rhs) => lhs.Value > rhs.Value;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >=(PxValueF lhs, PxValueF rhs) => lhs.Value >= rhs.Value;
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    // ToPxThicknessU
+
+    public bool IsNaN => float.IsNaN(Value);
+    public bool IsInfinity => float.IsInfinity(Value);
+    public bool IsPositiveInfinity => float.IsPositiveInfinity(Value);
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is PxValueF && (this == (PxValueF)obj);
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override int GetHashCode() => Value.GetHashCode();
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public bool Equals(PxValueF other) => Value == other.Value;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override string ToString() => $"{Value}dp";
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxThicknessU ToPxThicknessU(in PxThickness value)
-      => new PxThicknessU(UncheckedNumericCast.ToUInt32(value.Left), UncheckedNumericCast.ToUInt32(value.Top),
-                          UncheckedNumericCast.ToUInt32(value.Right), UncheckedNumericCast.ToUInt32(value.Bottom));
+    public static PxValueF Min(PxValueF val0, PxValueF val1) => new PxValueF(Math.Min(val0.Value, val1.Value));
 
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValueF Max(PxValueF val0, PxValueF val1) => new PxValueF(Math.Max(val0.Value, val1.Value));
   }
-
 }
 
 //****************************************************************************************************************************************************

@@ -1,7 +1,8 @@
-﻿//****************************************************************************************************************************************************
+﻿#nullable enable
+//****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -134,7 +135,7 @@ namespace MB.Base.Container
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
     public T[] SYS_GetArray() => m_array;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -169,7 +170,6 @@ namespace MB.Base.Container
       }
     }
 
-
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -182,7 +182,7 @@ namespace MB.Base.Container
     public static bool operator !=(ReadOnlyArraySegment<T> lhs, ReadOnlyArraySegment<T> rhs) => !(lhs == rhs);
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is ReadOnlyArraySegment<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is ReadOnlyArraySegment<T> && Equals((ReadOnlyArraySegment<T>)obj);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 

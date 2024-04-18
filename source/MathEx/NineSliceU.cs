@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2020, Mana Battery
+//* Copyright (c) 2020-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -97,7 +98,7 @@ namespace MB.Base.MathEx
     public override string ToString() => $"({SliceFromTopLeftX}:{SliceFromTopLeftY}:{SliceFromBottomRightX}:{SliceFromBottomRightY})";
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region IEquatable < NineSliceU> Members
+    // IEquatable < NineSliceU> Members
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     public bool Equals(NineSliceU other)
@@ -105,7 +106,6 @@ namespace MB.Base.MathEx
           SliceFromBottomRightX == other.SliceFromBottomRightX && SliceFromBottomRightY == other.SliceFromBottomRightY);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #endregion
     //------------------------------------------------------------------------------------------------------------------------------------------------
   };
 }

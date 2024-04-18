@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -32,7 +33,22 @@ namespace MB.Base
   public static class UncheckedNumericCast
   {
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToInt32
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(byte value) => (Int64)value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(UInt16 value) => (Int64)value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(UInt32 value) => (Int64)value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(Int32 value) => (Int64)value;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int32 ToInt32(byte value) => (Int32)value;
@@ -55,11 +71,11 @@ namespace MB.Base
       return (Int32)value;
     }
 
-    #endregion
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToUInt8
+
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ToUInt8(Int16 value)
@@ -77,12 +93,17 @@ namespace MB.Base
       return (byte)value;
     }
 
-    #endregion
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte ToUInt8(Int64 value)
+    {
+      Debug.Assert(value >= 0);
+      Debug.Assert(value <= byte.MaxValue);
+      return (byte)value;
+    }
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToUInt16
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UInt32 ToUInt16(sbyte value)
@@ -113,12 +134,24 @@ namespace MB.Base
       return (UInt16)value;
     }
 
-    #endregion
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt16 ToUInt16(Int64 value)
+    {
+      Debug.Assert(value >= 0);
+      Debug.Assert(value <= UInt16.MaxValue);
+      return (UInt16)value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt16 ToUInt16(UInt64 value)
+    {
+      Debug.Assert(value <= UInt16.MaxValue);
+      return (UInt16)value;
+    }
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region ToUInt32
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UInt32 ToUInt32(sbyte value)
@@ -156,7 +189,7 @@ namespace MB.Base
       return (UInt32)value;
     }
 
-    #endregion
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
   }
 }

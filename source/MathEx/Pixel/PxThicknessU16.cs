@@ -1,7 +1,8 @@
+#nullable enable
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -121,17 +122,13 @@ namespace MB.Base.MathEx.Pixel
                             Math.Max(val0.Bottom, val1.Bottom));
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-    #region IEquatable<PxThicknessU16> Members
+    // IEquatable<PxThicknessU16> Members
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     public bool Equals(PxThicknessU16 other)
     {
       return (Left == other.Left) && (Top == other.Top) && (Right == other.Right) && (Bottom == other.Bottom);
     }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-    #endregion
-    //------------------------------------------------------------------------------------------------------------------------------------------------
   }
 
 }

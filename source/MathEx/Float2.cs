@@ -1,7 +1,8 @@
-﻿//****************************************************************************************************************************************************
+﻿#nullable enable
+//****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019, Mana Battery
+//* Copyright (c) 2019-2024, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -49,10 +50,6 @@ namespace MB.Base.MathEx
 
     // Swizzle the components
     public readonly Float2 YX => new Float2(Y, X);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    #region Operators
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -197,11 +194,43 @@ namespace MB.Base.MathEx
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    #endregion
+    [ObsoleteAttribute]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Add(ref Float2 lhs, ref Float2 rhs, out Float2 rResult)
+    {
+      rResult.X = lhs.X + rhs.X;
+      rResult.Y = lhs.Y + rhs.Y;
+    }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    #region Methods
+    [ObsoleteAttribute]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Divide(ref Float2 lhs, ref Float2 rhs, out Float2 rResult)
+    {
+      rResult.X = lhs.X / rhs.X;
+      rResult.Y = lhs.Y / rhs.Y;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [ObsoleteAttribute]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Multiply(ref Float2 lhs, ref Float2 rhs, out Float2 rResult)
+    {
+      rResult.X = lhs.X * rhs.X;
+      rResult.Y = lhs.Y * rhs.Y;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [ObsoleteAttribute]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Substract(ref Float2 lhs, ref Float2 rhs, out Float2 rResult)
+    {
+      rResult.X = lhs.X - rhs.X;
+      rResult.Y = lhs.Y - rhs.Y;
+    }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -279,8 +308,6 @@ namespace MB.Base.MathEx
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Float2 Max(Float2 val0, Float2 val1) => new Float2(Math.Max(val0.X, val1.X), Math.Max(val0.Y, val1.Y));
-
-    #endregion
   }
 }
 
