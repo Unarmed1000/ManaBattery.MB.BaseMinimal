@@ -30,6 +30,9 @@ using System.Text;
 
 namespace MB.Base.Container
 {
+  /// <summary>
+  /// Barebones utility class for basic serialization.
+  /// </summary>
   public class ByteList
   {
     private List<byte> m_content;
@@ -91,6 +94,29 @@ namespace MB.Base.Container
       for (int i = 0; i < bytesWritten; ++i)
         m_content.Add(m_scratchpad[i]);
     }
+
+    /// <summary>
+    /// Write a float in little endian format
+    /// </summary>
+    /// <param name="value"></param>
+    public void AddFloat(float value)
+    {
+      int bytesWritten = ByteArrayUtil.WriteLE(m_scratchpad, 0, value);
+      for (int i = 0; i < bytesWritten; ++i)
+        m_content.Add(m_scratchpad[i]);
+    }
+
+    /// <summary>
+    /// Write a double in little endian format
+    /// </summary>
+    /// <param name="value"></param>
+    public void AddDouble(double value)
+    {
+      int bytesWritten = ByteArrayUtil.WriteLE(m_scratchpad, 0, value);
+      for (int i = 0; i < bytesWritten; ++i)
+        m_content.Add(m_scratchpad[i]);
+    }
+
 
     public void AddString(string strValue)
     {
