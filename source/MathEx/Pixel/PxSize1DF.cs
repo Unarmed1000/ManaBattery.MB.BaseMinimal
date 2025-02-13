@@ -2,7 +2,7 @@
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2022-2024, Mana Battery
+//* Copyright (c) 2022-2025, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -54,9 +54,9 @@ namespace MB.Base.MathEx.Pixel
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PxSize1DF(PxValueF valueDp)
+    public PxSize1DF(PxValueF valuePx)
     {
-      Value = PxValueF.Max(valueDp, new PxValueF());
+      Value = PxValueF.Max(valuePx, new PxValueF());
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -64,11 +64,11 @@ namespace MB.Base.MathEx.Pixel
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter",
                                                      Justification = "Used to select this constructor variant")]
-    public PxSize1DF(PxValueF valueDp, OptimizationCheckFlag optimizationFlag)
+    public PxSize1DF(PxValueF valuePx, OptimizationCheckFlag optimizationFlag)
     {
-      Debug.Assert(valueDp >= new PxValueF());
+      Debug.Assert(valuePx >= new PxValueF());
       Debug.Assert(optimizationFlag == OptimizationCheckFlag.NoCheck);    // remove warning
-      Value = valueDp;
+      Value = valuePx;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -85,27 +85,27 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxValueF Subtract(PxSize1DF sizeDp, PxSize1DF valueDp) => sizeDp.Value - valueDp.Value;
+    public static PxValueF Subtract(PxSize1DF sizePx, PxSize1DF valuePx) => sizePx.Value - valuePx.Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxValueF Subtract(PxValueF sizeDp, PxSize1DF valueDp) => sizeDp - valueDp.Value;
+    public static PxValueF Subtract(PxValueF sizePx, PxSize1DF valuePx) => sizePx - valuePx.Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxValueF Subtract(PxSize1DF sizeDp, PxValueF valueDp) => sizeDp.Value - valueDp;
+    public static PxValueF Subtract(PxSize1DF sizePx, PxValueF valuePx) => sizePx.Value - valuePx;
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 
-    public static PxSize1DF Divide(PxSize1DF sizeDp, PxSize1DF value) => new PxSize1DF(sizeDp.Value / value, OptimizationCheckFlag.NoCheck);
+    public static PxSize1DF Divide(PxSize1DF sizePx, PxSize1DF value) => new PxSize1DF(sizePx.Value / value, OptimizationCheckFlag.NoCheck);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 
-    public static PxValueF Divide(PxValueF sizeDp, PxSize1DF value) => sizeDp / value.Value;
+    public static PxValueF Divide(PxValueF sizePx, PxSize1DF value) => sizePx / value.Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 
-    public static PxValueF Divide(PxSize1DF sizeDp, PxValueF value) => sizeDp.Value / value;
+    public static PxValueF Divide(PxSize1DF sizePx, PxValueF value) => sizePx.Value / value;
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -270,9 +270,9 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxSize1DF Create(float valueDp)
+    public static PxSize1DF Create(float valuePx)
     {
-      return new PxSize1DF(new PxValueF(valueDp));
+      return new PxSize1DF(new PxValueF(valuePx));
     }
   }
 }

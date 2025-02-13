@@ -2,7 +2,7 @@
 //****************************************************************************************************************************************************
 //* BSD 3-Clause License
 //*
-//* Copyright (c) 2019-2024, Mana Battery
+//* Copyright (c) 2025, Mana Battery
 //* All rights reserved.
 //*
 //* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -30,16 +30,22 @@ using System.Runtime.CompilerServices;
 namespace MB.Base.MathEx.Pixel
 {
   [Serializable]
-  public struct PxPoint2 : IEquatable<PxPoint2>
+  public readonly struct PxValueD : IEquatable<PxValueD>
   {
-    public Int32 X;
-    public Int32 Y;
+    public static readonly PxValueD MinValue = new PxValueD(double.MinValue);
+    public static readonly PxValueD MaxValue = new PxValueD(double.MaxValue);
+
+    public static readonly PxValueD Zero = new PxValueD();
+    public static readonly PxValueD NaN = new PxValueD(double.NaN);
+    public static readonly PxValueD NegativeInfinity = new PxValueD(double.NegativeInfinity);
+    public static readonly PxValueD PositiveInfinity = new PxValueD(double.PositiveInfinity);
+
+    public readonly double Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PxPoint2(Int32 xPx, Int32 yPx)
+    public PxValueD(double xPxf)
     {
-      X = xPx;
-      Y = yPx;
+      Value = xPxf;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,29 +59,7 @@ namespace MB.Base.MathEx.Pixel
     /// <param name="rhs"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator +(PxPoint2 lhs, PxPoint2 rhs) => new PxPoint2(lhs.X + rhs.X, lhs.Y + rhs.Y);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Add
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator +(PxPoint2 lhs, PxSize2D rhs) => new PxPoint2(lhs.X + rhs.Width, lhs.Y + rhs.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Add
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator +(PxSize2D lhs, PxPoint2 rhs) => new PxPoint2(lhs.Width + rhs.X, lhs.Height + rhs.Y);
+    public static PxValueD operator +(PxValueD lhs, PxValueD rhs) => new PxValueD(lhs.Value + rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -86,107 +70,27 @@ namespace MB.Base.MathEx.Pixel
     /// <param name="rhs"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator -(PxPoint2 lhs, PxPoint2 rhs) => new PxPoint2(lhs.X - rhs.X, lhs.Y - rhs.Y);
+    public static PxValueD operator -(PxValueD lhs, PxValueD rhs) => new PxValueD(lhs.Value - rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Substract
     /// </summary>
     /// <param name="lhs"></param>
     /// <param name="rhs"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator -(PxPoint2 lhs, PxSize2D rhs) => new PxPoint2(lhs.X - rhs.Width, lhs.Y - rhs.Height);
+    public static PxValueD operator *(PxValueD lhs, PxValueD rhs) => new PxValueD(lhs.Value * rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Substract
     /// </summary>
     /// <param name="lhs"></param>
     /// <param name="rhs"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator -(PxSize2D lhs, PxPoint2 rhs) => new PxPoint2(lhs.Width - rhs.X, lhs.Height - rhs.Y);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Multiply two PxPoint2
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator *(PxPoint2 lhs, PxPoint2 rhs) => new PxPoint2(lhs.X * rhs.X, lhs.Y * rhs.Y);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Multiply two PxPoint2
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator *(PxPoint2 lhs, PxSize2D rhs) => new PxPoint2(lhs.X * rhs.Width, lhs.Y * rhs.Height);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Multiply two PxPoint2
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator *(PxSize2D lhs, PxPoint2 rhs) => new PxPoint2(lhs.Width * rhs.X, lhs.Height * rhs.Y);
-
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Multiply PxPoint2 by scalar
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator *(PxPoint2 lhs, Int32 rhs) => new PxPoint2(lhs.X * rhs, lhs.Y * rhs);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Multiply scalar by PxPoint2
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator *(Int32 lhs, PxPoint2 rhs) => new PxPoint2(lhs * rhs.X, lhs * rhs.Y);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Divide two PxPoint2
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator /(PxPoint2 lhs, PxPoint2 rhs) => new PxPoint2(lhs.X / rhs.X, lhs.Y / rhs.Y);
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    /// <summary>
-    /// Divide PxPoint2 by scalar
-    /// </summary>
-    /// <param name="lhs"></param>
-    /// <param name="rhs"></param>
-    /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator /(PxPoint2 lhs, Int32 rhs) => new PxPoint2(lhs.X / rhs, lhs.Y / rhs);
+    public static PxValueD operator /(PxValueD lhs, PxValueD rhs) => new PxValueD(lhs.Value / rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -196,47 +100,64 @@ namespace MB.Base.MathEx.Pixel
     /// <param name="value"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 operator -(PxPoint2 value) => new PxPoint2(-value.X, -value.Y);
+    public static PxValueD operator -(PxValueD value) => new PxValueD(-value.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator ==(PxPoint2 lhs, PxPoint2 rhs) => (lhs.X == rhs.X && lhs.Y == rhs.Y);
+    public static bool operator ==(PxValueD lhs, PxValueD rhs) => (lhs.Value == rhs.Value);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator !=(PxPoint2 lhs, PxPoint2 rhs) => !(lhs == rhs);
+    public static bool operator !=(PxValueD lhs, PxValueD rhs) => !(lhs == rhs);
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is PxPoint2 other && (this == other);
-
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode();
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-    public bool Equals(PxPoint2 other) => X == other.X && Y == other.Y;
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public override string ToString() => $"X:{X} Y:{Y}";
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 Min(PxPoint2 val0, PxPoint2 val1) => new PxPoint2(Math.Min(val0.X, val1.X), Math.Min(val0.Y, val1.Y));
+    public static bool operator <(PxValueD lhs, PxValueD rhs) => lhs.Value < rhs.Value;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <=(PxValueD lhs, PxValueD rhs) => lhs.Value <= rhs.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >(PxValueD lhs, PxValueD rhs) => lhs.Value > rhs.Value;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >=(PxValueD lhs, PxValueD rhs) => lhs.Value >= rhs.Value;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public bool IsNaN => double.IsNaN(Value);
+    public bool IsInfinity => double.IsInfinity(Value);
+    public bool IsPositiveInfinity => double.IsPositiveInfinity(Value);
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is PxValueD && (this == (PxValueD)obj);
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override int GetHashCode() => Value.GetHashCode();
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public bool Equals(PxValueD other) => Value == other.Value;
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public override string ToString() => $"{Value}px";
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static PxPoint2 Max(PxPoint2 val0, PxPoint2 val1) => new PxPoint2(Math.Max(val0.X, val1.X), Math.Max(val0.Y, val1.Y));
+    public static PxValueD Min(PxValueD val0, PxValueD val1) => new PxValueD(Math.Min(val0.Value, val1.Value));
 
-    public static PxPoint2 Zero => default;
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxValueD Max(PxValueD val0, PxValueD val1) => new PxValueD(Math.Max(val0.Value, val1.Value));
   }
 }
 

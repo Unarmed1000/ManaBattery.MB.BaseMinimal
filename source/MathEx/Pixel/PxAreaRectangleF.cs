@@ -44,7 +44,7 @@ namespace MB.Base.MathEx.Pixel
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private  PxAreaRectangleF(float left, float top, float right, float bottom, OptimizationInternal flag)
+    private PxAreaRectangleF(float left, float top, float right, float bottom, OptimizationInternal flag)
     {
       Debug.Assert(right >= left);
       Debug.Assert(bottom >= top);

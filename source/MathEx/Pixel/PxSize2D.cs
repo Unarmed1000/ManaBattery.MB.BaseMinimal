@@ -54,6 +54,14 @@ namespace MB.Base.MathEx.Pixel
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public PxSize2D(PxSize1D widthPx, PxSize1D heightPx)
+    {
+      m_width = widthPx.RawValue;
+      m_height = heightPx.RawValue;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter",
                                                      Justification = "Used to select this constructor variant")]

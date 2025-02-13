@@ -47,7 +47,7 @@ namespace MB.Base.MathEx.Pixel
       => PxAreaRectangleF.FromLeftTopRightBottom((float)value.Left, (float)value.Top, (float)value.Right, (float)value.Bottom, OptimizationCheckFlag.NoCheck);
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
-	// ToPxClipRectangle
+    // ToPxClipRectangle
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -119,6 +119,13 @@ namespace MB.Base.MathEx.Pixel
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxPoint2U ToPxPoint2U(PxPoint2 value) => new PxPoint2U(NumericCast.ToUInt32(value.X), NumericCast.ToUInt32(value.Y));
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+    // ToPxSize1D
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static PxSize1D ToPxSize1D(PxSize1DF value) => PxSize1D.UncheckedCreate(MathUtil.RoundToInt32(value.RawValue));
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
     // ToPxSize2D

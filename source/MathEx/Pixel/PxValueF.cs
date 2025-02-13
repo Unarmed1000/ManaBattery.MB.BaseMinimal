@@ -43,9 +43,9 @@ namespace MB.Base.MathEx.Pixel
     public readonly float Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PxValueF(float xDp)
+    public PxValueF(float xPxf)
     {
-      Value = xDp;
+      Value = xPxf;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ namespace MB.Base.MathEx.Pixel
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public override string ToString() => $"{Value}dp";
+    public override string ToString() => $"{Value}px";
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -38,6 +38,12 @@ namespace MB.Base
     public static Int64 ToInt64(byte value) => (Int64)value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(sbyte value) => (Int64)value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(Int16 value) => (Int64)value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int64 ToInt64(UInt16 value) => (Int64)value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -46,7 +52,15 @@ namespace MB.Base
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int64 ToInt64(Int32 value) => (Int64)value;
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(Int64 value) => value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(UInt64 value)
+    {
+      Debug.Assert(value <= (UInt64)Int64.MaxValue);
+      return (Int64)value;
+    }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -151,8 +165,6 @@ namespace MB.Base
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UInt32 ToUInt32(sbyte value)
     {
@@ -191,6 +203,37 @@ namespace MB.Base
 
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 ToUInt64(sbyte value)
+    {
+      Debug.Assert(value >= 0);
+      return (UInt64)value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 ToUInt64(Int16 value)
+    {
+      Debug.Assert(value >= 0);
+      return (UInt64)value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 ToUInt64(Int32 value)
+    {
+      Debug.Assert(value >= 0);
+      return (UInt64)value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 ToUInt64(Int64 value)
+    {
+      Debug.Assert(value >= 0);
+      return (UInt64)value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt64 ToUInt64(UInt32 value) => value;
   }
 }
 

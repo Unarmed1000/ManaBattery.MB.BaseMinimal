@@ -174,7 +174,7 @@ namespace MB.Base.Bits
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Read a uint32 from the byte array in little endian format.
+    /// Read a uint64 from the byte array in little endian format.
     /// </summary>
     /// <param name="array"></param>
     /// <param name="offset"></param>
@@ -189,6 +189,52 @@ namespace MB.Base.Bits
                 (((UInt64)span[6]) << 48) | (((UInt64)span[7]) << 56));
       return 8;
     }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+#if !MB_UNITY
+
+    /// <summary>
+    /// Read a uint128 from the byte array in little endian format.
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="offset"></param>
+    /// <param name="rValue"></param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int ReadLE(ReadOnlySpan<byte> span, out Int128 rValue)
+    {
+      Debug.Assert(span.Length >= 16);
+      rValue = (Int128)((((UInt128)span[0]) | (((UInt128)span[1]) << 8) | (((UInt128)span[2]) << 16) |
+                        (((UInt128)span[3]) << 24) | (((UInt128)span[4]) << 32) | (((UInt128)span[5]) << 40) |
+                        (((UInt128)span[6]) << 48) | (((UInt128)span[7]) << 56) |
+                        (((UInt128)span[8]) << 64) | (((UInt128)span[9]) << 72) | (((UInt128)span[10]) << 80) | (((UInt128)span[11]) << 88) |
+                        (((UInt128)span[12]) << 96) | (((UInt128)span[13]) << 104) | (((UInt128)span[14]) << 112) | (((UInt128)span[15]) << 120)));
+      return 16;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Read a uint128 from the byte array in little endian format.
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="offset"></param>
+    /// <param name="rValue"></param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int ReadLE(ReadOnlySpan<byte> span, out UInt128 rValue)
+    {
+      Debug.Assert(span.Length >= 16);
+      rValue = (((UInt128)span[0]) | (((UInt128)span[1]) << 8) | (((UInt128)span[2]) << 16) |
+                (((UInt128)span[3]) << 24) | (((UInt128)span[4]) << 32) | (((UInt128)span[5]) << 40) |
+                (((UInt128)span[6]) << 48) | (((UInt128)span[7]) << 56) |
+                (((UInt128)span[8]) << 64) | (((UInt128)span[9]) << 72) | (((UInt128)span[10]) << 80) | (((UInt128)span[11]) << 88) |
+                (((UInt128)span[12]) << 96) | (((UInt128)span[13]) << 104) | (((UInt128)span[14]) << 112) | (((UInt128)span[15]) << 120));
+      return 16;
+    }
+
+#endif
 
     /// <summary>
     /// Read a float from the byte array in little endian format.
@@ -391,7 +437,7 @@ namespace MB.Base.Bits
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Read a little endian Int32
+    /// Read a little endian Int64
     /// </summary>
     /// <param name="array"></param>
     /// <param name="size"></param>
@@ -416,6 +462,36 @@ namespace MB.Base.Bits
       return (((UInt64)span[0]) | (((UInt64)span[1]) << 8) | (((UInt64)span[2]) << 16) | (((UInt64)span[3]) << 24) |
              (((UInt64)span[4]) << 32) | (((UInt64)span[5]) << 40) | (((UInt64)span[6]) << 48) | (((UInt64)span[7]) << 56));
     }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+#if !MB_UNITY
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int128 ReadInt128LE(ReadOnlySpan<byte> span)
+    {
+      Debug.Assert(span.Length >= 16);
+      return (Int128)((((UInt128)span[0]) | (((UInt128)span[1]) << 8) | (((UInt128)span[2]) << 16) | (((UInt128)span[3]) << 24) |
+                      (((UInt128)span[4]) << 32) | (((UInt128)span[5]) << 40) | (((UInt128)span[6]) << 48) | (((UInt128)span[7]) << 56) |
+                      (((UInt128)span[8]) << 64) | (((UInt128)span[9]) << 72) | (((UInt128)span[10]) << 80) | (((UInt128)span[11]) << 88) |
+                      (((UInt128)span[12]) << 96) | (((UInt128)span[13]) << 104) | (((UInt128)span[14]) << 112) | (((UInt128)span[15]) << 120)));
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt128 ReadUInt128LE(ReadOnlySpan<byte> span)
+    {
+      Debug.Assert(span.Length >= 16);
+      return (((UInt128)span[0]) | (((UInt128)span[1]) << 8) | (((UInt128)span[2]) << 16) | (((UInt128)span[3]) << 24) |
+             (((UInt128)span[4]) << 32) | (((UInt128)span[5]) << 40) | (((UInt128)span[6]) << 48) | (((UInt128)span[7]) << 56) |
+             (((UInt128)span[8]) << 64) | (((UInt128)span[9]) << 72) | (((UInt128)span[10]) << 80) | (((UInt128)span[11]) << 88) |
+             (((UInt128)span[12]) << 96) | (((UInt128)span[13]) << 104) | (((UInt128)span[14]) << 112) | (((UInt128)span[15]) << 120));
+    }
+
+#endif
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -539,6 +615,32 @@ namespace MB.Base.Bits
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
+#if ! MB_UNITY
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int128 ReadInt128LE(ref ReadOnlySpan<byte> rSpan)
+    {
+      var value = ReadInt128LE(rSpan);
+      //rSpan = rSpan.Slice(sizeof(Int128));
+      rSpan = rSpan.Slice(16);
+      return value;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt128 ReadUInt128LE(ref ReadOnlySpan<byte> rSpan)
+    {
+      var value = ReadUInt128LE(rSpan);
+      //rSpan = rSpan.Slice(sizeof(UInt128));
+      rSpan = rSpan.Slice(16);
+      return value;
+    }
+
+#endif
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float ReadFloatLE(ref ReadOnlySpan<byte> rSpan)
     {
@@ -652,14 +754,15 @@ namespace MB.Base.Bits
     {
       Debug.Assert(dst.Length >= 8);
 
-      dst[0] = (byte)(value & 0xFF);
-      dst[1] = (byte)((value >> 8) & 0xFF);
-      dst[2] = (byte)((value >> 16) & 0xFF);
-      dst[3] = (byte)((value >> 24) & 0xFF);
-      dst[4] = (byte)((value >> 32) & 0xFF);
-      dst[5] = (byte)((value >> 40) & 0xFF);
-      dst[6] = (byte)((value >> 48) & 0xFF);
-      dst[7] = (byte)((value >> 56) & 0xFF);
+      UInt64 valueEx = (UInt64)value;
+      dst[0] = (byte)(valueEx & 0xFF);
+      dst[1] = (byte)((valueEx >> 8) & 0xFF);
+      dst[2] = (byte)((valueEx >> 16) & 0xFF);
+      dst[3] = (byte)((valueEx >> 24) & 0xFF);
+      dst[4] = (byte)((valueEx >> 32) & 0xFF);
+      dst[5] = (byte)((valueEx >> 40) & 0xFF);
+      dst[6] = (byte)((valueEx >> 48) & 0xFF);
+      dst[7] = (byte)((valueEx >> 56) & 0xFF);
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -682,8 +785,67 @@ namespace MB.Base.Bits
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
+#if !MB_UNITY
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void WriteInt128LE(Span<byte> dst, Int128 value)
+    {
+      Debug.Assert(dst.Length >= 16);
+
+      UInt128 valueEx = (UInt128)value;
+      dst[0] = (byte)(valueEx & 0xFF);
+      dst[1] = (byte)((valueEx >> 8) & 0xFF);
+      dst[2] = (byte)((valueEx >> 16) & 0xFF);
+      dst[3] = (byte)((valueEx >> 24) & 0xFF);
+      dst[4] = (byte)((valueEx >> 32) & 0xFF);
+      dst[5] = (byte)((valueEx >> 40) & 0xFF);
+      dst[6] = (byte)((valueEx >> 48) & 0xFF);
+      dst[7] = (byte)((valueEx >> 56) & 0xFF);
+      // write the second half
+      dst[8] = (byte)((valueEx >> 64) & 0xFF);
+      dst[9] = (byte)((valueEx >> 72) & 0xFF);
+      dst[10] = (byte)((valueEx >> 80) & 0xFF);
+      dst[11] = (byte)((valueEx >> 88) & 0xFF);
+      dst[12] = (byte)((valueEx >> 96) & 0xFF);
+      dst[13] = (byte)((valueEx >> 104) & 0xFF);
+      dst[14] = (byte)((valueEx >> 112) & 0xFF);
+      dst[15] = (byte)((valueEx >> 120) & 0xFF);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void WriteUInt128LE(Span<byte> dst, UInt128 value)
+    {
+      Debug.Assert(dst.Length >= 16);
+
+      dst[0] = (byte)(value & 0xFF);
+      dst[1] = (byte)((value >> 8) & 0xFF);
+      dst[2] = (byte)((value >> 16) & 0xFF);
+      dst[3] = (byte)((value >> 24) & 0xFF);
+      dst[4] = (byte)((value >> 32) & 0xFF);
+      dst[5] = (byte)((value >> 40) & 0xFF);
+      dst[6] = (byte)((value >> 48) & 0xFF);
+      dst[7] = (byte)((value >> 56) & 0xFF);
+      // write the second half
+      dst[8] = (byte)((value >> 64) & 0xFF);
+      dst[9] = (byte)((value >> 72) & 0xFF);
+      dst[10] = (byte)((value >> 80) & 0xFF);
+      dst[11] = (byte)((value >> 88) & 0xFF);
+      dst[12] = (byte)((value >> 96) & 0xFF);
+      dst[13] = (byte)((value >> 104) & 0xFF);
+      dst[14] = (byte)((value >> 112) & 0xFF);
+      dst[15] = (byte)((value >> 120) & 0xFF);
+    }
+
+#endif
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
     /// <summary>
-    /// Write a uint64 to the byte array in little endian format.
+    /// Write a float to the byte array in little endian format.
     /// </summary>
     /// <param name="array"></param>
     /// <param name="offset"></param>
@@ -701,7 +863,7 @@ namespace MB.Base.Bits
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
-    /// Write a uint64 to the byte array in little endian format.
+    /// Write a double to the byte array in little endian format.
     /// </summary>
     /// <param name="array"></param>
     /// <param name="offset"></param>
@@ -946,6 +1108,76 @@ namespace MB.Base.Bits
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
+#if ! MB_UNITY
+
+    /// <summary>
+    /// Write a int64 to the byte array in little endian format.
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="offset"></param>
+    /// <param name="value"></param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int WriteLE(Span<byte> span, Int128 value)
+    {
+      Debug.Assert(span.Length >= 16);
+      UInt128 valueEx = (UInt128)value;
+      span[0] = (byte)(valueEx & 0xFF);
+      span[1] = (byte)((valueEx >> 8) & 0xFF);
+      span[2] = (byte)((valueEx >> 16) & 0xFF);
+      span[3] = (byte)((valueEx >> 24) & 0xFF);
+      span[4] = (byte)((valueEx >> 32) & 0xFF);
+      span[5] = (byte)((valueEx >> 40) & 0xFF);
+      span[6] = (byte)((valueEx >> 48) & 0xFF);
+      span[7] = (byte)((valueEx >> 56) & 0xFF);
+
+      span[8] = (byte)((valueEx >> 64) & 0xFF);
+      span[9] = (byte)((valueEx >> 72) & 0xFF);
+      span[10] = (byte)((valueEx >> 80) & 0xFF);
+      span[11] = (byte)((valueEx >> 88) & 0xFF);
+      span[12] = (byte)((valueEx >> 96) & 0xFF);
+      span[13] = (byte)((valueEx >> 104) & 0xFF);
+      span[14] = (byte)((valueEx >> 112) & 0xFF);
+      span[15] = (byte)((valueEx >> 120) & 0xFF);
+      return 8;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Write a uint64 to the byte array in little endian format.
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="offset"></param>
+    /// <param name="value"></param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int WriteLE(Span<byte> span, UInt128 value)
+    {
+      Debug.Assert(span.Length >= 8);
+      span[0] = (byte)(value & 0xFF);
+      span[1] = (byte)((value >> 8) & 0xFF);
+      span[2] = (byte)((value >> 16) & 0xFF);
+      span[3] = (byte)((value >> 24) & 0xFF);
+      span[4] = (byte)((value >> 32) & 0xFF);
+      span[5] = (byte)((value >> 40) & 0xFF);
+      span[6] = (byte)((value >> 48) & 0xFF);
+      span[7] = (byte)((value >> 56) & 0xFF);
+
+      span[8] = (byte)((value >> 64) & 0xFF);
+      span[9] = (byte)((value >> 72) & 0xFF);
+      span[10] = (byte)((value >> 80) & 0xFF);
+      span[11] = (byte)((value >> 88) & 0xFF);
+      span[12] = (byte)((value >> 96) & 0xFF);
+      span[13] = (byte)((value >> 104) & 0xFF);
+      span[14] = (byte)((value >> 112) & 0xFF);
+      span[15] = (byte)((value >> 120) & 0xFF);
+      return 8;
+    }
+
+#endif
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
     /// <summary>
     /// Write a uint64 to the byte array in little endian format.
     /// </summary>
@@ -1092,6 +1324,29 @@ namespace MB.Base.Bits
       rBytesRead = sizeof(UInt64);
       return ReadUInt64LE(span);
     }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+#if ! MB_UNITY
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int128 ReadInt128LE(ReadOnlySpan<byte> span, out int rBytesRead)
+    {
+      rBytesRead = 16;
+      return ReadInt128LE(span);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UInt128 ReadUInt128LE(ReadOnlySpan<byte> span, out int rBytesRead)
+    {
+      rBytesRead = 16;
+      return ReadUInt128LE(span);
+    }
+
+#endif
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 

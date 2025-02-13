@@ -48,15 +48,43 @@ namespace MB.Base
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int32 ToInt32(byte value) => (Int32)value;
+    public static Int32 ToInt32(sbyte value) => (Int32)value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int32 ToInt32(UInt16 value) => (Int32)value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int32 ToInt32(Int16 value) => (Int32)value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int32 ToInt32(UInt32 value)
     {
       if (value <= (UInt32)int.MaxValue)
         return (Int32)value;
+      throw new ConversionOverflowException();
+    }
+
+    public static Int32 ToInt32(Int32 value)
+    {
+      return (Int32)value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int32 ToInt32(UInt64 value)
+    {
+      if (value <= (UInt32)Int32.MaxValue)
+        return (Int32)value;
+      throw new ConversionOverflowException();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int32 ToInt32(Int64 value)
+    {
+      if (value >= Int32.MinValue && value <= Int32.MaxValue)
+        return (Int32)value;
+
+      if (value < 0)
+        throw new ConversionUnderflowException();
       throw new ConversionOverflowException();
     }
 
@@ -239,8 +267,16 @@ namespace MB.Base
         return (UInt64)value;
       throw new ConversionUnderflowException();
     }
+
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Int64 ToInt64(Int64 value)
+    {
+      return value;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Int64 ToInt64(UInt64 value)

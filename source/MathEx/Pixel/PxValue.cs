@@ -38,9 +38,9 @@ namespace MB.Base.MathEx.Pixel
     public readonly Int32 Value;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PxValue(Int32 xDp)
+    public PxValue(Int32 xPx)
     {
-      Value = xDp;
+      Value = xPx;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ namespace MB.Base.MathEx.Pixel
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public override string ToString() => $"{Value}dp";
+    public override string ToString() => $"{Value}px";
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -148,6 +148,11 @@ namespace MB.Base.MathEx.Pixel
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PxValue Max(PxValue val0, PxValue val1) => new PxValue(Math.Max(val0.Value, val1.Value));
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static PxValue Zero => new PxValue();
+
   }
 }
 
